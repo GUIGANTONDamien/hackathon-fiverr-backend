@@ -1,5 +1,3 @@
-const { CLIEngine } = require('eslint');
-const { request } = require('express');
 const pool = require('../database');
 
 express = require('express');

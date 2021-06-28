@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const pool = require('../mysql2');
+const pool = require('../database');
 
 router.post('/', (request, response) => {
   const { id, password } = request.body;

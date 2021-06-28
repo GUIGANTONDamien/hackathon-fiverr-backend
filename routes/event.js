@@ -25,19 +25,25 @@ router.get('/:id', (request, response) => {
 });
 
 router.post('/', (request, response) => {
-  const { title, description, date } = request.body;
+  const formContent = request.body;
+  console.log(formContent);
   // format de la date doit etre : 2020-10-14 :18:00
   pool.query(
-    'INSERT INTO event (title, description, date) VALUE (?, ?, ?)',
-    [title, description, date],
+    'INSERT INTO event (title, description, date, user_id) VALUE (?, ?, ?, ?)',
+    [
+      formContent.title,
+      formContent.description,
+      formContent.date,
+      formContent.user_id,
+    ],
     (error, results) => {
+      console.log(results);
       if (error) {
         response.status(500).send(error);
         console.log(error);
       } else {
-        response
-          .status(201)
-          .send({ id: results.insertId, title, description, date });
+        response.status(201).send('ok');
+        //id: results.insertId, title, description, date
         console.log(results);
       }
     }

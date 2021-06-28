@@ -7,6 +7,7 @@ const Login = require('./routes/Login');
 const port = process.env.PORT || 8080;
 const { FRONTEND_URL } = process.env;
 const eventRouter = require('./routes/event');
+const usersRouter = require('./routes/users');
 const app = express();
 
 app.use(
@@ -16,9 +17,7 @@ app.use(
 );
 app.use(express.json());
 app.use('/Login', Login);
-
-// Your code here!
-
+app.use('/user', usersRouter);
 app.use('/event', eventRouter);
 
 // Don't write anything below this line!

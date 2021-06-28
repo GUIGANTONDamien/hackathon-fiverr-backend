@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const connection = require('./database');
+const pool = require('./database');
 const port = process.env.PORT || 8080;
 const { FRONTEND_URL } = process.env;
 

@@ -5,7 +5,7 @@ require('dotenv').config();
 const pool = require('./database');
 const port = process.env.PORT || 8080;
 const { FRONTEND_URL } = process.env;
-
+const eventRouter = require('./routes/event');
 const app = express();
 
 app.use(
@@ -16,6 +16,8 @@ app.use(
 app.use(express.json());
 
 // Your code here!
+
+app.use('/event', eventRouter);
 
 // Don't write anything below this line!
 app.listen(port, () => {

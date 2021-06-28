@@ -1,29 +1,41 @@
 const express = require('express');
 
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const pool = require('../mysql2');
+const pool = require('../database');
 
-router.post('/', (request, response) => {
-  const { id, password } = request.body;
-  pool.query('SELECT * FROM user WHERE id = ?', [id], (error, results) => {
+//récupérer tous les users existants
+router.get('/', (request, response) => {
+  pool.query('SELECT * FROM user', (error, results) => {
     if (error) {
-      response.send(error);
+      response.status(500).send(error);
+      console.log(error);
     } else {
-      bcrypt.compare(password, results[0].password, (error, res) => {
-        // compare le mot de passe de la db,
-        if (res) {
-          response.send(res);
-          //  renvoies true
-        } else if (error) {
-          response.send(error);
-        } else {
-          response.send(res);
-          // renvoies false
-        }
-      });
+      response.send(results);
+      console.log(results);
     }
   });
 });
+
+router.post('/', (request, response) => {
+  const { lastname, firstname, email, pseudo, password } = request.body;
+      pool.query(
+        'INSERT INTO user (lastname, firstname, email, pseudo, password) VALUES (?,?,?,?,?)',
+        [
+          lastname,
+          firstname,
+          email,
+          pseudo,
+          password,
+        ],
+        // eslint-disable-next-line no-shadow
+        (error) => {
+          if (error) {
+            response.status(500).send(`Error Creating new User${error}`);
+          } else {
+            response.status(200).send('User created');
+          }
+        }
+      );
+  });
 
 module.exports = router;

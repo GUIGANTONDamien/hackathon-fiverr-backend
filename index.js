@@ -2,7 +2,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const Login = require('./routes/Login');
+const login = require('./routes/login');
 
 const port = process.env.PORT || 8080;
 const { FRONTEND_URL } = process.env;
@@ -15,7 +15,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use('/Login', Login);
+app.use('/login', login);
 
 // Your code here!
 

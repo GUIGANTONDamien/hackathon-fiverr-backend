@@ -9,6 +9,6 @@ const config = {
   database: process.env.DB_NAME,
 };
 
-const connection = mysql.createPool(config);
+const pool = mysql.createPool(config);
 
-module.exports = connection;
+module.exports = pool;

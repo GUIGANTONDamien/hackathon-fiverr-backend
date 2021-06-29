@@ -7,7 +7,7 @@ router.post('/', (request, response) => {
   const formContent = request.body;
   console.log(formContent);
   pool.query(
-    'INSERT INTO user(lastname, firstname, pseudo, email, password) VALUES (?, ?, ?, ?, ?) ',
+    'INSERT INTO user (lastname, firstname, pseudo, email, password) VALUES (?, ?, ?, ?, ?)',
     [
       formContent.lastname,
       formContent.firstname,
@@ -17,9 +17,10 @@ router.post('/', (request, response) => {
     ],
     (error, results) => {
       if (error) {
-        response.send(error);
+        response.status(500).send(error);
       } else {
-        response.send(results);
+        response.status(200).send(results);
+        console.log(results);
       }
     }
   );

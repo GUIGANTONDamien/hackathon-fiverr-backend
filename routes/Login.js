@@ -18,24 +18,19 @@ router.get('/', (request, response) => {
 
 router.post('/', (request, response) => {
   const { lastname, firstname, email, pseudo, password } = request.body;
-      pool.query(
-        'INSERT INTO user (lastname, firstname, email, pseudo, password) VALUES (?,?,?,?,?)',
-        [
-          lastname,
-          firstname,
-          email,
-          pseudo,
-          password,
-        ],
-        // eslint-disable-next-line no-shadow
-        (error) => {
-          if (error) {
-            response.status(500).send(`Error Creating new User${error}`);
-          } else {
-            response.status(200).send('User created');
-          }
-        }
-      );
-  });
+  pool.query(
+    'INSERT INTO user (lastname, firstname, email, pseudo, password) VALUES (?,?,?,?,?)',
+    [lastname, firstname, email, pseudo, password],
+    // eslint-disable-next-line no-shadow
+    (error, response) => {
+      if (error) {
+        response.status(500).send(`Error Creating new User${error}`);
+        console.log(error);
+      } else {
+        response.status(200).send('User created');
+      }
+    }
+  );
+});
 
 module.exports = router;
